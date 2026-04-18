@@ -1,17 +1,23 @@
 # Linux Scripts (System & Monitoring)
 
-Detta repository innehåller praktiska Bash-scripts med fokus på systemadministration, övervakning och logghantering.
+Detta repository innehåller praktiska Bash-scripts med fokus på Linux drift, övervakning och logghantering.
 
 ## Scripts
 
 ### Backup & Archive
-Skapar komprimerade backuper av kataloger med timestamp.
+Skapar komprimerade backuper av kataloger med timestamp för versionshantering.
 
 ### Log Cleanup
-Identifierar stora loggfiler och arkiverar dem.
+Identifierar stora loggfiler, arkiverar dem och frigör diskutrymme.
 
 ### Process Monitor
-Övervakar processer och startar om vid behov.
+Övervakar en process och startar om den automatiskt om den slutar köras.
+
+### Log Analysis
+Analyserar systemloggar för att identifiera misslyckade inloggningsförsök.
+Exempel:
+grep "Failed password" /var/log/auth.log | wc -l
 
 ## Syfte
-Bygga praktisk förståelse för Linux drift och felsökning.
+
+Bygga praktisk kompetens inom Linux systemadministration, felsökning och övervakning – med fokus på verkliga scenarion inom IT och cybersäkerhet.
