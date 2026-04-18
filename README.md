@@ -1,27 +1,30 @@
 # Linux Scripts (System & Monitoring)
 
-Detta repository innehåller praktiska Bash-scripts med fokus på Linux drift, övervakning och logghantering i en systemnära miljö.
-
-## Struktur
-
-scripts/
-- backup_rotation.sh
-- log_rotation.sh
-- log_analysis.sh
-- watch_failed_logins.sh
-- process_monitor.sh
+Detta repository innehåller praktiska Bash-scripts med fokus på Linux drift, övervakning och logghantering.
 
 ## Scripts
 
+### Backup & Archive
+Skapar komprimerade backuper av kataloger med timestamp samt inkluderar failsafe vid avbrott.
+
 ### Backup Rotation
-Skapar versionshanterade backuper av kataloger med timestamp och rensar äldre backuper för att spara diskutrymme.
+Skapar versionshanterade backuper och rensar äldre för att spara diskutrymme.
 
 ### Log Rotation
-Övervakar storleken på loggfiler och roterar dem automatiskt när de överstiger en given gräns.
+Roterar loggfiler baserat på storlek och skapar nya loggar.
 
 ### Log Analysis
-Analyserar systemloggar för att identifiera misslyckade inloggningsförsök.
+Analyserar systemloggar för misslyckade inloggningsförsök.
 
 Exempel:
-```bash
 grep "Failed password" /var/log/auth.log | wc -l
+
+### Failed Login Monitoring
+Övervakar loggar i realtid och visar misslyckade inloggningar.
+
+### Process Monitor
+Övervakar en process och startar om den automatiskt vid behov.
+
+## Syfte
+
+Bygga praktisk kompetens inom Linux systemadministration, övervakning och incidenthantering.
