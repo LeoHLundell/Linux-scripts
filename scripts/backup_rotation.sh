@@ -1,4 +1,5 @@
 #!/bin/bash
+# Purpose: Create timestamped backups and keep last 5
 
 src="$HOME/Documents/test_folder4"
 dest="$HOME/backups"
@@ -8,15 +9,16 @@ backup_dir="$dest/test_folder4_$timestamp"
 mkdir -p "$backup_dir"
 rsync -a "$src/" "$backup_dir"
 
-cd "$dest" || { echo "No such directory: "$dest" found" >> rotation.log; exit 1 }
+cd "$dest" || { echo "No such directory: $dest" >> rotation.log; exit 1; }
 
-backups=( $(ls -dt test_folder4_*) )
+backups=( $(ls -dt test_folder4_* 2>/dev/null) )
 
-if [ "${backups[@]}" -gt 5 ]; then
- to_delete=( "${backups[@]:5}" )
+if [ "${#backups[@]}" -gt 5 ]; then
+  to_delete=( "${backups[@]:5}" )
   for dir in "${to_delete[@]}"; do
-   rm -rf "$dir"
-   echo "Deleted old backup: $dir" && echo "Deleted old backup: $dir at $(date)" >> rotation.log
+    rm -rf "$dir"
+    echo "Deleted old backup: $dir at $(date)" >> rotation.log
   done
 fi
 
+echo "Backup completed: $backup_dir"
