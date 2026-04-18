@@ -1,27 +1,28 @@
 #!/bin/bash
+# Purpose: Rotate log if size exceeds threshold
 
-logfile="$HOME/Documents/test_folder4/autolog.log"
-archived="$HOME/Documents/test_folder4/archivedlogs"
-timestamp=$(date +%Y-%m-%d_%H-%M-%S )
+logfile="$HOME/logtests/autolog.log"
+archived="$HOME/logtests/archive"
+timestamp=$(date +%Y-%m-%d_%H-%M-%S)
+max_size=5120  # 5KB
 
-if [ -f "$logfile" ] && [ $(stat -c %s "$logfile") -gt 1024 ]; then
- mv "$logfile" "${logfile}_${timestamp}"
-result1=$?
+mkdir -p "$archived"
+
+if [ ! -f "$logfile" ]; then
+  echo "No logfile found: $logfile"
+  exit 1
 fi
 
-if [ "$result1" = 0 ]; then
- mv "${logfile}_${timestamp}" "$archived"
-result2=$?
-elif ! [ "$result1" = 0 ]; then
- echo "failed to rename logfile at $timestamp in $0"
- echo "cancelling to prevent error..."
- exit 1
-fi
+size=$(stat -c %s "$logfile")
 
-if [ "$result2" = 0 ]; then
- touch "$logfile"
- echo "Log rotated at $timestamp"
-elif ! [ "$result2" = 0 ]; then
- echo "failed to move logfile to archives at $timestamp in $0"
-fi
+if [ "$size" -gt "$max_size" ]; then
+  new_name="${logfile}_${timestamp}.log"
+  mv "$logfile" "$new_name" || { echo "Rename failed"; exit 1; }
 
+  mv "$new_name" "$archived/" || { echo "Move failed"; exit 1; }
+
+  touch "$logfile"
+  echo "Log rotated at $timestamp"
+else
+  echo "No rotation needed (size: $size bytes)"
+fi
