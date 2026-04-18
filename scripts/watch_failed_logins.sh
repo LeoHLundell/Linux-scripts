@@ -1,6 +1,6 @@
 #!/bin/bash
+# Purpose: Watch failed login attempts in real time
 
-echo "Watching $logfile for 'Failed' logins..."
-echo "Press Ctrl+C to stop"
+echo "Watching for failed login attempts (Ctrl+C to stop)..."
 
-journalctl -f | grep --line-buffered "Failed"
+journalctl -f | grep --line-buffered "Failed password"
